@@ -1,0 +1,20 @@
+base:
+  log_level: INFO
+
+data:
+  content: 'data/wall.jpg'
+
+train:
+  estimator_name: 'kmeans'
+  estimators:
+    kmeans:
+      n_clusters: 4
+  model_path: 'models/model.joblib'
+
+reports:
+  original_shape: 'reports/original_shape.json'
+  metrics: 'reports/metrics.json'
+  outputs: 'reports/result.jpg'
+
+data_load:
+  X_np: 'data/processed/X.npy'
