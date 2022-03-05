@@ -17,6 +17,7 @@ stages:
     deps:
       - src/stages/train_model.py
       - data/processed/X.npy
+      - src/train/train.py
     params:
       - base
       - train

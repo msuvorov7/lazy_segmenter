@@ -28,8 +28,11 @@ stages:
       md5: 154b38f0add916a0040d6bb699f21220
       size: 2825738
     - path: src/stages/train_model.py
-      md5: a6b421803060ca68185adac51a4bb4ac
-      size: 1380
+      md5: 3561a0bf1e97f7dbfdbd72910cb0c312
+      size: 1427
+    - path: src/train/train.py
+      md5: 3a4bfdd3f4dd987e4c488ff64cf1d7d1
+      size: 783
     params:
       params.yaml:
         base:
@@ -38,14 +41,15 @@ stages:
           estimator_name: kmeans
           estimators:
             kmeans:
-              n_clusters: 4
+              n_clusters:
+              - 8
           model_path: models/model.joblib
     outs:
     - path: models/model.joblib
-      md5: 906bce8a5c3d99b927f3a9512ecfe1e1
+      md5: eb002e893dc63680e772d09598c89716
       size: 3768333
     - path: reports/metrics.json
-      md5: b0a464aaaf14700760cce7b0e89cdca2
+      md5: 981e6a774ac8bba5706b06d07b2c8ca8
       size: 35
   evaluate:
     cmd: python src/stages/evaluate.py --config=params.yaml
@@ -54,7 +58,7 @@ stages:
       md5: 154b38f0add916a0040d6bb699f21220
       size: 2825738
     - path: models/model.joblib
-      md5: 906bce8a5c3d99b927f3a9512ecfe1e1
+      md5: eb002e893dc63680e772d09598c89716
       size: 3768333
     - path: reports/original_shape.json
       md5: 325836b3a05420a2e5c2fadd04434565
@@ -69,5 +73,5 @@ stages:
           outputs: reports/result.jpg
     outs:
     - path: reports/result.jpg
-      md5: 21cbf8644177f6bb26ac502604282dea
-      size: 247424
+      md5: a8ade97066da5f40f53743e7dd6722a7
+      size: 247638
