@@ -1,0 +1,73 @@
+schema: '2.0'
+stages:
+  data_load:
+    cmd: python src/stages/data_load.py --config=params.yaml
+    deps:
+    - path: src/stages/data_load.py
+      md5: 3d226fc6cda20b065b1233c06ee23352
+      size: 1180
+    params:
+      params.yaml:
+        base:
+          log_level: INFO
+        data:
+          content: data/wall.jpg
+        data_load:
+          X_np: data/processed/X.npy
+    outs:
+    - path: data/processed/X.npy
+      md5: 154b38f0add916a0040d6bb699f21220
+      size: 2825738
+    - path: reports/original_shape.json
+      md5: 325836b3a05420a2e5c2fadd04434565
+      size: 58
+  train:
+    cmd: python src/stages/train_model.py --config=params.yaml
+    deps:
+    - path: data/processed/X.npy
+      md5: 154b38f0add916a0040d6bb699f21220
+      size: 2825738
+    - path: src/stages/train_model.py
+      md5: a6b421803060ca68185adac51a4bb4ac
+      size: 1380
+    params:
+      params.yaml:
+        base:
+          log_level: INFO
+        train:
+          estimator_name: kmeans
+          estimators:
+            kmeans:
+              n_clusters: 4
+          model_path: models/model.joblib
+    outs:
+    - path: models/model.joblib
+      md5: 906bce8a5c3d99b927f3a9512ecfe1e1
+      size: 3768333
+    - path: reports/metrics.json
+      md5: b0a464aaaf14700760cce7b0e89cdca2
+      size: 35
+  evaluate:
+    cmd: python src/stages/evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/X.npy
+      md5: 154b38f0add916a0040d6bb699f21220
+      size: 2825738
+    - path: models/model.joblib
+      md5: 906bce8a5c3d99b927f3a9512ecfe1e1
+      size: 3768333
+    - path: reports/original_shape.json
+      md5: 325836b3a05420a2e5c2fadd04434565
+      size: 58
+    params:
+      params.yaml:
+        base:
+          log_level: INFO
+        reports:
+          original_shape: reports/original_shape.json
+          metrics: reports/metrics.json
+          outputs: reports/result.jpg
+    outs:
+    - path: reports/result.jpg
+      md5: 21cbf8644177f6bb26ac502604282dea
+      size: 247424

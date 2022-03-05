@@ -22,6 +22,7 @@ stages:
       - train
     outs:
       - models/model.joblib
+      - reports/metrics.json
 
   evaluate:
     cmd: python src/stages/evaluate.py --config=params.yaml
@@ -34,4 +35,3 @@ stages:
       - reports
     outs:
       - reports/result.jpg
-      - reports/metrics.json
