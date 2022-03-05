@@ -8,7 +8,7 @@ train:
   estimator_name: 'kmeans'
   estimators:
     kmeans:
-      n_clusters: 4
+      n_clusters: [8]
   model_path: 'models/model.joblib'
 
 reports:

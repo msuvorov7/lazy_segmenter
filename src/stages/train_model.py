@@ -1,9 +1,16 @@
 import argparse
+import os
+import sys
 import time
 import yaml
 import json
 import numpy as np
 import joblib
+
+sys.path.insert(0, os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+))
+
 from src.utils.logger import setup_logger
 from src.train.train import train
 
@@ -22,7 +29,7 @@ def train_model(config_path: str) -> None:
     logger.info('Loaded train dataset')
 
     start_time = time.time()
-    model = train(x, estimator_name)
+    model = train(x, estimator_name, config['train']['estimators'][estimator_name])
     fitting_time = time.time() - start_time
 
     models_path = config['train']['model_path']

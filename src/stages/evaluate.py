@@ -1,10 +1,18 @@
 import argparse
 import json
+import os
+import sys
 
 import yaml
 import joblib
 import numpy as np
 from PIL import Image
+
+sys.path.insert(0, os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+))
+
+
 from src.utils.logger import setup_logger
 
 def evaluate_model(config_path: str) -> None:

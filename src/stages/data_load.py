@@ -3,6 +3,14 @@ from PIL import Image
 import yaml
 import numpy as np
 import json
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+))
+
 from src.utils.logger import setup_logger
 
 
@@ -37,7 +45,7 @@ def data_load(config_path: str) -> None:
 
 if __name__ == '__main__':
     args_parser = argparse.ArgumentParser()
-    args = args_parser.parse_args()
     args_parser.add_argument('--config', dest='config', required=True)
+    args = args_parser.parse_args()
 
     data_load(config_path=args.config)

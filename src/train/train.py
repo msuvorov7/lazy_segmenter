@@ -1,4 +1,5 @@
 from sklearn.cluster import KMeans
+from sklearn.model_selection import GridSearchCV
 import numpy as np
 
 
@@ -15,13 +16,16 @@ def get_supportded_estimator() -> dict:
     }
 
 
-def train(x: np.array, estimator_name: str):
+def train(x: np.array, estimator_name: str, param_grid: dict):
     estimators = get_supportded_estimator()
 
     if estimator_name not in estimators:
         raise UnsupportedModel(estimator_name)
 
     estimator = estimators[estimator_name]()
-    estimator.fit(x)
+    clf = GridSearchCV(estimator=estimator,
+                       param_grid=param_grid,
+                       )
+    clf.fit(x)
 
-    return estimator
+    return clf.best_estimator_
